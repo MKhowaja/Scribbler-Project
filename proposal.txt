@@ -1,6 +1,6 @@
 Title: xXN1NJA007IceCream3.14QU1CKSC0P3_420_TruckBot#YOLOXx 
 1. What is the objective of your project?
-•	Objective of the project is to program a Scribbler S2 robot that will act as a transporter
+The objective of the project is to program a Scribbler S2 robot that will act as a transporter with the following functions: 
 •	It will carry a specific item to a predetermined destination
 •	Once it arrives at the destination it will capture an image in order to keep a record of the recipient, similar to a signature with postal delivery
 •	The robot will thereafter navigate back to its starting point
