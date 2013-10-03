@@ -1,14 +1,21 @@
-Title: xXN1NJA007IceCream3.14QU1CKSC0P3_420_TruckBot#YOLOXx
-(I VOTE ON HAVING A NICKNAME WHICH IS SHORTER) IceCreamBot (ICB) maybe? 
-IceCream3.14Bot
+Title: xXN1NJA007IceCream3.14QU1CKSC0P3_420_TruckBot#YOLOXx 
 1. What is the objective of your project?
-The objective of the project is to program a Scribbler S2 robot that will act as a transporter. It will carry a specific item to a predetermined destination, and then ensure that the item is received by the recipient by capturing an image the moment the item is received. The robot will thereafter navigate back to its starting point. The path that the robot will take to its destination will be dynamically determined corresponding to the circumstances of the route. Once it arrives at the destination it will capture an image in order to keep a record of the recipient, similar to a signature with postal delivery. 
+•	Objective of the project is to program a Scribbler S2 robot that will act as a transporter
+•	It will carry a specific item to a predetermined destination
+•	Once it arrives at the destination it will capture an image in order to keep a record of the recipient, similar to a signature with postal delivery
+•	The robot will thereafter navigate back to its starting point
+•	The path that the robot will take to its destination will be dynamically determined corresponding to the circumstances of the route 
 
 2. What is the main design challenge in doing the project? 
-The main design challenge in doing this project is to overcome the hardware limitations that are found on the Scribbler 2. For example, its sensors seem to barely work and only under optimal lighting conditions. This poses a problem because the objective of our bot is to properly navigate in an area that will have irregular lighting and obstacles, which will likely increase the difficulty of the coding as we will have to find creative workarounds to accommodate the lack of optimal hardware functionality. Similarly, the Scribbler losing track of its location relative to the room and its orientation relative to the destination will be a challenge due to the way that it navigates around obstacles, as navigation is made much more difficult without powerful obstacle detection capabilities from the hardware. 
-
-//The obstacle navigation will further pose a challenge for the Scribbler as it will possibly need to learn the floor map as it travels around the room and be able to eliminate paths that are not effective routes (i.e. dead ends, long routes).
-NOTE: it says main so i cant really put everything on the list as an answer for this question.
+•	The main design challenge in doing this project is to overcome the hardware limitations that are found on the Scribbler 2.
+•	Its sensors seem to barely work and only under optimal lighting conditions. This poses a problem because the objective of our bot is to properly navigate in an area that will have irregular lighting and obstacles
+•	Have to find creative workarounds to accommodate the lack of optimal hardware functionality 
+•	Keeping track of the Scribbler’s location relative to the room and its orientation relative to the destination as it navigates around obstacles
 
 3. What will you show during the presentation?
-In the presentation, we will have our robot act as an ice cream truck. The robot will transport an ice cream cone from one corner of the room to another and return to its starting point, avoiding obstacles in its way, all the while playing ice cream truck music. Once it arrives at its destination, it will also take a picture of the recipient and beep 3 times in order to verify that it has reached the destination and the recipient has successfully received the ice cream cone (in the occurrence of a lack of a recipient, the picture that is sent back to the control center will indicate that there was no recipient. Some examples of obstacles that will be avoided include garbage cans and backpacks, desks, and chairs. 
+•	Our robot will act as an ice cream truck. 
+•	It will transport an ice cream cone from one corner of the room to another and return to its starting point
+•	It will avoid obstacles along its way (i.e. chairs, desks, backpacks)
+•	It will play ice cream truck music. 
+•	It will take a picture of the recipient and beep 3 times in order to verify that it has reached the destination 
+•	It will then store the image onto the control center (i.e. the computer from which the script is executed)
