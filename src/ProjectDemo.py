@@ -8,7 +8,7 @@ SPEED = 10.6 #m/s
 ANGLE = X #degrees/s
 sensor=[0,0,0]
 time = 0 #time travelled in current heading
-ROTATE_EXTRA = ANGLE*
+ROTATE_EXTRA = ANGLE*1.2 ## to account for robot size, turn more than what the sensors detect to completely avoid object
 
 destination = [int(raw_input), int(raw_input)]
 current = [0.0, 0.0]
