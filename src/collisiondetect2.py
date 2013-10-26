@@ -1,17 +1,36 @@
 from myro import *
+from array import array
+
 init("COM40")
 i = 0
+j = 0
 sensor=[0,0,0]
+
+ROTATE_EXTRA=##X
+MOVE_TIME=##Y
+
+destination(input, input)
+LEFT_OBSTACLE=0
+RIGHT_OBSTACLE=0
+
 while i<100:
     sensor = getObstacle()
     ##if sensor[0]<800 and sensor[1]<800 and sensor[2]<800:
     forward(1)
 
-    if sensor[0]>sensor[2]:
+    if sensor[0]>=sensor[2]:
         turnRight(1)
+        if sensor[0]<sensor[2]:         ##Turn a bit more to account for robot size
+            for j in range(0, ROTATE_EXTRA)
+                turnRight(1)
+            LEFT_OBSTACLE=1;
         
     if sensor[2]>sensor[0]: 
         turnLeft(1)
+        if sensor[2]>=sensor[0]:         ##Turn a bit more to account for robot size
+            for j in range(0, ROTATE_EXTRA)
+                turnLeft(1)
+            RIGHT_OBSTACLE=1;
     i+=1
 stop()
 
