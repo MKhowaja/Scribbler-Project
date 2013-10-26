@@ -1,21 +1,27 @@
+
 from myro import *
+import math
 
 init("COM40")
 i = 0
 j = 0
+SPEED = 10.6 #m/s
+ANGLE = 45 #degrees/s
 sensor=[0,0,0]
-
-ROTATE = ##R
-ROTATE_EXTRA = ##X
-MOVE_TIME = ##Y
+time = 0 #time travelled in current heading
+##ROTATE_EXTRA = ##X
 
 destination = [int(raw_input), int(raw_input)]
 current = [0.0, 0.0]
 LEFT_OBSTACLE = 0
 RIGHT_OBSTACLE = 0
-angle = 0
+offset_angle = 0
+direct_angle= math.degrees(math.atan(destination[1]/destination[0]))
 
-while fabs(current[0]-destination[0]) >= 0.05 and fabs(current[1]-destination[1]) >= 0.05:
+turnToHeading(direct_angle, ANGLE);
+while math.fabs(current[0]-destination[0]) >= 5 and math.fabs(current[1]-destination[1]) >= 5:
+    direct_angle=math.degrees(math.atan((destination[1]-current[1])/(destination[0]-current[0])))
+    
     sensor = getObstacle()
     ##if sensor[0]<800 and sensor[1]<800 and sensor[2]<800:
     forward(1)
@@ -46,6 +52,15 @@ while fabs(current[0]-destination[0]) >= 0.05 and fabs(current[1]-destination[1]
     i+=1
 stop()
 
+def turnToHeading (direct_angle, ANGLE):
+    if (direct_angle>=0):
+        turnLeft(direct_angle/ANGLE)
+    else:
+        turnRight(math.fabs(direct_angle)/ANGLE)
+
+##def checkLeftObstacle:
+    ##turnRight(90 degrees)
+#    checkSensors()
 
 ##def timer(seconds=0):
 ##     """ A function to be used with 'for' """
