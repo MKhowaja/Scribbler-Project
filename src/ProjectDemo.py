@@ -2,6 +2,7 @@ from myro import *
 import math
 
 init("COM5")
+i = 0
 j = 0
 SPEED = 10.6 #cm/s
 ANGLE = 115.3 #degrees/s
@@ -26,8 +27,11 @@ while math.fabs(current[0]-destination[0]) >= 5 and math.fabs(current[1]-destina
         current[0] += SPEED*math.cos(current_angle)/10
         current[1] += SPEED*math.sin(current_angle)/10
         if obstacle == 1: #If it just turned from an obstacle, try to turn back towards destination
-            obstacle = 0
-            turnToHeading(direct_angle, current_angle, ANGLE)
+            if i==10
+                i=0
+                obstacle = 0
+                turnToHeading(direct_angle, current_angle, ANGLE)
+            i++
     elif sensor[0]>=sensor[2]: #If obstacle to left, turn right and track angle
         turnRight(1, 0.1)
         current_angle -= math.radians(ANGLE)/10
