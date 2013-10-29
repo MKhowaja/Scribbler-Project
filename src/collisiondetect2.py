@@ -20,10 +20,10 @@ current_angle = 0   #angle the robot is facing
 
 def turnToHeading (direct_angle, current_angle, ANGLE):     #turn robot towards destination
     if direct_angle>current_angle:
-        turnRight(1, (direct_angle-current_angle)/math.radians(ANGLE))
+        turnLeft(1, (current_angle-direct_angle)/math.radians(ANGLE))
         current_angle=direct_angle
     elif direct_angle<current_angle:
-        turnLeft(1, (current_angle-direct_angle)/math.radians(ANGLE))
+        turnRight(1, (direct_angle-current_angle)/math.radians(ANGLE))
         current_angle=direct_angle
 
 turnToHeading(direct_angle, current_angle, ANGLE)
