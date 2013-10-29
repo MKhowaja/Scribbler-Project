@@ -23,37 +23,37 @@ while math.fabs(current[0]-destination[0]) >= 5 and math.fabs(current[1]-destina
     direct_angle=math.atan((destination[1]-current[1])/(destination[0]-current[0]))     #Track angle towards destination
     sensor = getObstacle()
     if sensor[0]<500 and sensor[1]<500 and sensor[2]<500:   #If path is clear, move forward and track coordinates
-        forward(1)
-        current[0] += SPEED*math.cos(current_angle)
-        current[1] += SPEED*math.sin(current_angle)
+        forward(1, 0.1)
+        current[0] += SPEED*math.cos(current_angle)/10
+        current[1] += SPEED*math.sin(current_angle)/10
         if obstacle == 1:         #If it just turned from an obstacle, try to turn back towards destination
             obstacle = 0
             turnToHeading(direct_angle, current_angle, ANGLE)
     elif sensor[0]>=sensor[2]:      #If obstacle to left, turn right and track angle
-        turnRight(1)
-        current_angle -= math.radians(ANGLE)
+        turnRight(1, 0.1)
+        current_angle -= math.radians(ANGLE)/10
         obstacle = 1
         if sensor[0]<sensor[2]:         #Turn a bit more to account for robot size
-            for j in range(0, ROTATE_EXTRA):
-                turnRight(1)
-                current_angle-=math.radians(ANGLE)
+            for j in range(0, ROTATE_EXTRA*10):
+                turnRight(1, 0.1)
+                current_angle-=math.radians(ANGLE)/10
     elif sensor[2]>sensor[0]:       #If obstacle to right, turn left and track angle
-        turnLeft(1)
-        current_angle += math.radians(ANGLE)
+        turnLeft(1, 0.1)
+        current_angle += math.radians(ANGLE)/10
         obstacle = 1
         if sensor[2]>=sensor[0]:         #Turn a bit more to account for robot size
-            for j in range(0, ROTATE_EXTRA):
-                turnLeft(1)
-                current_angle += math.radians(ANGLE)
+            for j in range(0, ROTATE_EXTRA*10):
+                turnLeft(1, 0.1)
+                current_angle += math.radians(ANGLE)/10
 stop()
 for j in range(0, 360):
-    turnright(ANGLE/360)
+    turnRight(ANGLE/360)
     show(takePicture)
 
 def turnToHeading (direct_angle, current_angle, ANGLE):     #turn robot towards destination
     if direct_angle>current_angle:
-        turnRight((direct_angle-current_angle)/math.radians(ANGLE))
+        turnRight(1, (direct_angle-current_angle)/math.radians(ANGLE))
         current_angle=direct_angle
     elif direct_angle<current_angle:
-        turnLeft((current_angle-direct_angle)/math.radians(ANGLE))
+        turnLeft(1, (current_angle-direct_angle)/math.radians(ANGLE))
         current_angle=direct_angle
