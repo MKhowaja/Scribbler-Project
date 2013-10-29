@@ -10,8 +10,8 @@ sensor=[0,0,0]
 time = 0 #time travelled in current heading
 ROTATE_EXTRA = ANGLE*0.06
 
-a = int(raw_input("Enter x distance: "))
-b = int(raw_input("Enter y distance: "))
+a = int(raw_input("Enter x distance (m): "))
+b = int(raw_input("Enter y distance (m): "))
 destination = [a*100, b*100] #destination coordinates (convert to cm)
 current = [0.0, 0.0] #current coordinates (will be incremented by cm)
 obstacle = 0 #variable to see if robot is moving past an obstacle
