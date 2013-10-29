@@ -9,7 +9,9 @@ sensor=[0,0,0]
 time = 0 #time travelled in current heading
 ROTATE_EXTRA = ANGLE*T #T is some time TBD
 
-destination = [int(raw_input)*100, int(raw_input)*100]  #destination coordinates (convert to cm)
+a = int(raw_input("Enter x distance: "))
+b = int(raw_input("Enter y distance: "))
+destination = [a*100, b*100]  #destination coordinates (convert to cm)
 current = [0.0, 0.0]    #current coordinates (will be incremented by cm)
 obstacle = 0    #variable to see if robot is moving past an obstacle
 direct_angle = math.atan(destination[1]/destination[0])  #angle towards destination
