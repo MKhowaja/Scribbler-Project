@@ -15,8 +15,8 @@ r_f = 5
 
 ir_rng = 0.1 # range of the IR sensor
 threshold = 3200 # threshold for IR obstacle
-v = 12.5 #cm/s
-w = 90 # degrees/s
+v = 12.5 # cm/s
+w = 115.38 # degrees/s
 
 # until it reaches destination
 while math.abs(x_f - x) > r_f || math.abs(y_f - y) > r_f:
