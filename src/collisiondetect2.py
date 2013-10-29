@@ -51,8 +51,3 @@ def turnToHeading (direct_angle, current_angle, ANGLE):     #turn robot towards 
     elif direct_angle<current_angle:
         turnLeft((current_angle-direct_angle)/math.radians(ANGLE))
         current_angle=direct_angle
-        
-
-#def checkLeftObstacle:
-    ##turnRight(90 degrees)
-#    checkSensors()
