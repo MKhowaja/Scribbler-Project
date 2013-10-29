@@ -24,7 +24,7 @@ while math.fabs(current[0]-destination[0]) >= 5 and math.fabs(current[1]-destina
         forward(1)
         current[0] += SPEED*math.cos(current_angle)
         current[1] += SPEED*math.sin(current_angle)
-        if obstacle = 1         #If it just turned from an obstacle, try to turn back towards destination
+        if obstacle == 1         #If it just turned from an obstacle, try to turn back towards destination
             obstacle = 0
             turnToHeading(direct_angle, current_angle, ANGLE)
     elif sensor[0]>=sensor[2]:      #If obstacle to left, turn right and track angle
