@@ -17,6 +17,15 @@ current = [0.0, 0.0]    #current coordinates (will be incremented by cm)
 obstacle = 0    #variable to see if robot is moving past an obstacle
 direct_angle = math.atan(destination[1]/destination[0])  #angle towards destination
 current_angle = 0   #angle the robot is facing
+
+def turnToHeading (direct_angle, current_angle, ANGLE):     #turn robot towards destination
+    if direct_angle>current_angle:
+        turnRight(1, (direct_angle-current_angle)/math.radians(ANGLE))
+        current_angle=direct_angle
+    elif direct_angle<current_angle:
+        turnLeft(1, (current_angle-direct_angle)/math.radians(ANGLE))
+        current_angle=direct_angle
+
 turnToHeading(direct_angle, current_angle, ANGLE)
 
 while math.fabs(current[0]-destination[0]) >= 5 and math.fabs(current[1]-destination[1]) >= 5: #move until scribby is 5cm away
@@ -32,7 +41,7 @@ while math.fabs(current[0]-destination[0]) >= 5 and math.fabs(current[1]-destina
                 i=0
                 obstacle = 0
                 turnToHeading(direct_angle, current_angle, ANGLE)
-            i++
+            i += 1
     elif sensor[0]>=sensor[2]:      #If obstacle to left, turn right and track angle
         turnRight(1, 0.1)
         current_angle -= math.radians(ANGLE)/10
@@ -53,11 +62,3 @@ stop()
 for j in range(0, 360):
     turnRight(ANGLE/360)
     show(takePicture)
-
-def turnToHeading (direct_angle, current_angle, ANGLE):     #turn robot towards destination
-    if direct_angle>current_angle:
-        turnRight(1, (direct_angle-current_angle)/math.radians(ANGLE))
-        current_angle=direct_angle
-    elif direct_angle<current_angle:
-        turnLeft(1, (current_angle-direct_angle)/math.radians(ANGLE))
-        current_angle=direct_angle
