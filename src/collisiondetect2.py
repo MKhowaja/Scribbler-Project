@@ -1,7 +1,7 @@
 from myro import *
 import math
 
-init("COM40")
+init("COM5")
 j = 0
 SPEED = 10.6 #cm/s
 ANGLE = X #degrees/s
