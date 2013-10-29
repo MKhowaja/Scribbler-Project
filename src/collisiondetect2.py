@@ -4,10 +4,10 @@ import math
 init("COM5")
 j = 0
 SPEED = 10.6 #cm/s
-ANGLE = X #degrees/s
+ANGLE = 115.3 #degrees/s
 sensor=[0,0,0]
 time = 0 #time travelled in current heading
-ROTATE_EXTRA = ANGLE*T #T is some time TBD
+ROTATE_EXTRA = ANGLE*0.06
 
 a = int(raw_input("Enter x distance: "))
 b = int(raw_input("Enter y distance: "))
