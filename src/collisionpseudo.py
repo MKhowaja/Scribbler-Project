@@ -1,5 +1,7 @@
 # Problem: center is x, y, not front of robot (cause when rotating that gets screwed up)
 # TODO: use camera in decision making
+
+#noobnoobnoobnoobnub.
 from myro import *
 import math
 
