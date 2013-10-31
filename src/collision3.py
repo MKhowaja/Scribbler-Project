@@ -16,21 +16,27 @@ y_f = 200
 r_f = 5 # radius of endzone
 
 ### CONSTANTS ###
-ir_rng = 10 # range of the IR sensor (cm)
-threshold = 1100 # threshold for IR obstacle
+ir_rng = 13 # range of the IR sensor (cm)
+threshold = 850 # threshold for IR obstacle
 v = 12.5 # velocity (cm/s)
 w = 115.38 # omega (degrees/s)
 
 def getDeltaTheta(): # returns the angle between where it's facing and where it needs to go
-	global x, y
+	global x, y, theta
 	d_x = x_f - x
 	d_y = y_f - y
 	if d_x == 0:
+            if(d_y > 0):
 		d_theta = 90
+	    else:
+                d_theta = 270
 	else:
 		d_theta = math.degrees(math.atan(d_y/d_x))
-	print "Delta theta calculated to be:%d" % (d_theta - theta) 
-	return (d_theta - theta)
+	print "Delta theta calculated to be:%d" % (d_theta - theta)
+        if(d_x >= 0):
+            return (d_theta - theta)
+        else:
+            return (d_theta + theta)
 
 def turn(n): # rotates n degrees, updates theta
 	global w, theta
