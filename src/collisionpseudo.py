@@ -2,6 +2,7 @@
 # TODO: use camera in decision making
 
 #noobnoobnoobnoobnub.
+#nomnomnomfood
 from myro import *
 import math
 
