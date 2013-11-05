@@ -28,8 +28,8 @@ def getDeltaTheta(): # returns the angle between where it's facing and where it 
 	d_x = x_f - x
 	d_y = y_f - y
 	if d_x == 0:
-            if(d_y > 0):
-		d_theta = 90
+		if(d_y > 0):
+			d_theta = 90
 	    else:
                 d_theta = 270
 	else:
