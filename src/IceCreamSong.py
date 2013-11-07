@@ -1,104 +1,82 @@
 from myro import *
 init("COM40")
-## Musical notes in the scale, as they correspond to beep frequency
-pitchA4  = 440.0
-pitchBf4 = 466.164
-pitchAs4 = 466.164 
-pitchB4  = 493.883
-pitchC5  = 523.251
-pitchDf5 = 554.37
-pitchCs5 = 554.37 
-pitchD5  = 587.33
-pitchEf5 = 622.25
-pitchDs5 = 622.25
-pitchE5  = 659.26
-pitchF5  = 698.46
-pitchGf5 = 739.99
-pitchFs5 = 739.99 
-pitchG5  = 783.99
-pitchAf5 = 830.61
-pitchGs5 = 830.61
-pitchA5  = 880
-pitchBf5 = 932.33
-pitchAs5 = 932.33
-pitchB5  = 987.77
+# Musical notes in the scale, as they correspond to beep frequency
+# Notes are 4th and 5th octaves
+#4th octave
+A  = 440.0    #A
+As = 466.164  # Asharp or Bflat
+B  = 493.88   #B
+#5th octave
+C  = 523.25   #C 
+Cs = 554.37   #Csharp or Dflat
+D  = 587.33   #D
+Ds = 622.25   #Dsharp or Eflat
+E  = 659.26   #E
+F  = 698.46   #F
+Fs = 739.99   #Fsharp or Gflat
+G  = 783.99   #G
+Gs = 830.61   #G sharp or A flat
+A2  = 880     #A octave higher
+As2 = 932.33  #Asharp or Bflat octave higher
+B2  = 987.77  #B octave higher
 
 
-def main():
-    i = 0
-
-  ## Infinite loop to play the song while moving
-    while(1):
-
-        ## Move in a circle
-        motors(.1,1)
+def playSong(n):
+    
+  ## Infinite loop to play the song until destination has been reached
+    while(n):
  
-        beep(0.25, pitchB5)
-        beep(0.25, pitchA5)
-        beep(0.5, pitchG5)
-        beep(0.5, pitchG5)
-        beep(0.5, pitchG5)
-        
-        motors(-.1,-1)
+        beep(0.25, B2)
+        beep(0.25, A2)
+        beep(0.5, G)
+        beep(0.5, G)
+        beep(0.5, G)
 
-        beep(0.25, pitchB4)
-        beep(0.25, pitchC5)
-        beep(0.20, pitchD5)
-        beep(0.20, pitchE5)
-        beep(0.20, pitchD5)
-        beep(0.20, pitchB4)
-        beep(0.40, pitchD5)
-
-        motors(1,.1)
+        beep(0.25, B)
+        beep(0.25, C)
+        beep(0.20, D)
+        beep(0.20, E)
+        beep(0.20, D)
+        beep(0.20, B)
+        beep(0.40, D)
   
-        beep(0.25, pitchG5)
-        beep(0.25, pitchA5)
-        beep(0.20, pitchB5)
-        beep(0.20, pitchB5)
-        beep(0.20, pitchB5)
-        beep(0.20, pitchB5)
-        beep(0.50, pitchB5)
-
-        motors(-1,-.1)
+        beep(0.25, G)
+        beep(0.25, A2)
+        beep(0.20, B2)
+        beep(0.20, B2)
+        beep(0.20, B2)
+        beep(0.20, B2)
+        beep(0.50, B2)
   
-        beep(0.25, pitchG5)
-        beep(0.25, pitchA5)
-        beep(0.20, pitchB5)
-        beep(0.20, pitchA5)
-        beep(0.20, pitchA5)
-        beep(0.20, pitchGs5)
-        beep(0.50, pitchA5)
+        beep(0.25, G)
+        beep(0.25, A2)
+        beep(0.20, B2)
+        beep(0.20, A2)
+        beep(0.20, A2)
+        beep(0.20, Gs)
+        beep(0.50, A2)
 
-        motors(.1,1)
  
-        beep(0.25, pitchB5)
-        beep(0.25, pitchA5)
-        beep(0.20, pitchG5)
-        beep(0.20, pitchA5)
-        beep(0.20, pitchG5)
-        beep(0.20, pitchA5)
-        beep(0.20, pitchG5)
-        beep(0.20, pitchD5)
- 
-        motors(-.1,-1)
+        beep(0.25, B2)
+        beep(0.25, A2)
+        beep(0.20, G)
+        beep(0.20, A2)
+        beep(0.20, G)
+        beep(0.20, A2)
+        beep(0.20, G)
+        beep(0.20, D)
 
-        beep(0.20, pitchB4)
-        beep(0.20, pitchC5)
-        beep(0.20, pitchD5)
-        beep(0.20, pitchE5)
-        beep(0.20, pitchD5)
-        beep(0.20, pitchB4)
-        beep(0.20, pitchD5)
-        beep(0.20, pitchD5)
+        beep(0.20, B)
+        beep(0.20, C)
+        beep(0.20, D)
+        beep(0.20, E)
+        beep(0.20, D)
+        beep(0.20, B)
+        beep(0.20, D)
+        beep(0.20, D)
 
-        motors(1,.1)
-
-        beep(0.20, pitchG5)
-        beep(0.20, pitchA5)
-        beep(0.7, pitchB5)
-        beep(0.8, pitchA5)
-        beep(1.1, pitchG5)
- ## main
-
-
-main()
+        beep(0.20, G)
+        beep(0.20, A2)
+        beep(0.7, B2)
+        beep(0.8, A2)
+        beep(1.1, G)
