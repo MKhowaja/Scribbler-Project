@@ -15,7 +15,7 @@ theta = 90
 # destination
 x_f = 0
 y_f = 200
-r_f = 5 # radius of endzone
+r_f = 10 # radius of endzone
 
 ### CONSTANTS ###
 ir_rng = 13 # range of the IR sensor (cm)
@@ -55,6 +55,16 @@ def obstructed(n): # faces angle n, checks whether obstructed, turns back
 	if n != 0:
 		turn(n)
 	s = getObstacle()
+	num_readings = 3
+
+	for i in range(len(s)):
+		s[i] /= num_readings
+
+	for i in range(1,num_readings):
+		a = getObstacle()
+		for x in range(len(s)):
+			s[x] += a[x]/num_readings
+
 	print "Obstacles:%s, threshold:%d" %(str(s), threshold)
 	if s[0] > threshold or s[1] > threshold or s[2] > threshold:
 		obstructed = True
@@ -82,6 +92,9 @@ def atDest():
 
 # until it reaches destination
 while not atDest():
+	x_f = int(raw_input("X_Final:"));
+	y_f = int(raw_input("Y_Final:"));
+
 	# rotate to face destination
 	angle = getDeltaTheta()
 	turn(angle)
