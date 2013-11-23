@@ -100,9 +100,17 @@ while not atDest():
     turn(angle)
 
     # move forward until detects obstacle
+    motors(1,1)
+    t0 = currentTime()
+
     while not obstructed(0) and not atDest():
-        raw_input("Press any key to continue...")
-        move(ir_rng)
+        pass
+
+    motors(0,0)
+    t1 = currentTime()
+
+    x += v*(t1-t0)*math.cos(math.radians(theta)) # update x
+    y += v*(t1-t0)*math.sin(math.radians(theta)) # update y
 
     if atDest():
         break
