@@ -1,6 +1,8 @@
 import time
 from Myro import *  # Import the myro module
-init("simulator")   # Use the robot simulator
+init("COM7")   # Use the robot simulator
+
+setS2Volume(100)
 
 bass=392
 A  = 440.0
@@ -24,11 +26,11 @@ C2 = 1046.50
 
 beep(0.25, G)
 time.sleep(0.075)
-beep(0.05, G)
-beep(0.05, A2)
-beep(0.05, G)
-beep(0.05, A2)
-beep(0.05, G)
+beep(0.015, G)
+beep(0.015, A2)
+beep(0.015, G)
+beep(0.015, A2)
+beep(0.025, G)
 time.sleep(0.075)
 beep(0.25, Fs)
 time.sleep(0.075)
@@ -46,11 +48,11 @@ beep(1, bass)
 
 beep(0.25, G)
 time.sleep(0.075)
-beep(0.05, G)
-beep(0.05, A2)
-beep(0.05, G)
-beep(0.05, A2)
-beep(0.05, G)
+beep(0.015, G)
+beep(0.015, A2)
+beep(0.015, G)
+beep(0.015, A2)
+beep(0.025, G)
 time.sleep(0.075)
 beep(0.25, E)
 time.sleep(0.075)

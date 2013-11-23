@@ -2,6 +2,12 @@
 # TODO: use camera in decision making
 # to do: check if it's continually getting further from the destination
 
+#potential to dos:
+    #smarter deciding turn left or right
+    #assuming rectangular objects
+    #instead of turning 90, turn to face destination
+    #get velocity by doing move-by
+
 from Myro import *
 import math
 
@@ -14,17 +20,20 @@ theta = 90
 
 # destination
 x_f = 0
-y_f = 200
+y_f = 100
+theta_f = 90
 r_f = 10 # radius of endzone
 
 ### CONSTANTS ###
-ir_rng = 13 # range of the IR sensor (cm)
+ir_rng = 18 # range of the IR sensor (cm)
 threshold = 1000 # threshold for IR obstacle
 v = 12.5 # velocity (cm/s)
 w = 115.38 # omega (degrees/s)
+setIRPower(132)
+setS2Volume(100)
 
-def getDeltaTheta(): # returns the angle between where it's facing and where it needs to go
-    global x, y, theta
+def getDeltaTheta(theta): # returns the angle between where it's facing and where it needs to go
+    global x, y
     d_x = x_f - x
     d_y = y_f - y
     if d_x == 0:
@@ -35,11 +44,20 @@ def getDeltaTheta(): # returns the angle between where it's facing and where it 
     else:
         d_theta = math.degrees(math.atan(d_y/d_x))
 
-    print ("Delta theta calculated to be:", (d_theta - theta))
+    if(d_x < 0):
+        if(d_y < 0):
+            d_theta -= 180
+        else:
+            d_theta += 180
+
     if(d_x >= 0):
-        return (d_theta - theta)
+        d_theta_f = d_theta - theta
     else:
-        return (d_theta + theta)
+        d_theta_f = d_theta + theta
+
+    print ("Delta theta calculated to be:", d_theta_f)
+
+    return d_theta_f
 
 def turn(n): # rotates n degrees, updates theta
     global theta
@@ -81,13 +99,24 @@ def move(d): # moves d centimeters, updates position
     global x, y, theta, v
     print ("Moving %d cm (%f seconds)..."%(d, abs(d/v)))
     if d >= 0:
-        forward(1, d/v)
+        direction = 1
     else:
-        backward(1, -d/v)
+        direction = -1
+
+    motors(direction,direction)
+    t0 = currentTime()
+
+    travelled = 0
+    while not obstructed(0) and abs(travelled - d) > 5 and not atDest():
+        t1 = currentTime()
+        travelled += v*(t1-t0)*direction
+        t0 = t1
+
+    motors(0,0)
 
     print ("Initial position: x:%d y:%d theta:%d" % (x, y, theta))
-    x += d*math.cos(math.radians(theta)) # update x
-    y += d*math.sin(math.radians(theta)) # update y
+    x += travelled*math.cos(math.radians(theta)) # update x
+    y += travelled*math.sin(math.radians(theta)) # update y
     print ("Final position: x:%d y:%d theta:%d" % (x, y, theta))
 
 def atDest():
@@ -96,23 +125,15 @@ def atDest():
 # until it reaches destination
 while not atDest():
     # rotate to face destination
-    angle = getDeltaTheta()
+    angle = getDeltaTheta(theta)
     turn(angle)
 
     # move forward until detects obstacle
-    motors(1,1)
-    t0 = currentTime()
-
-    while not obstructed(0) and not atDest():
-        pass
-
-    motors(0,0)
-    t1 = currentTime()
-
-    x += v*(t1-t0)*math.cos(math.radians(theta)) # update x
-    y += v*(t1-t0)*math.sin(math.radians(theta)) # update y
+    move(math.sqrt((x_f-x)**2+(y_f-y)**2))
 
     if atDest():
+        turn(theta_f - theta)
+        beep(1,880)
         break
 
     # turn based on which sensor detects the obstacle
@@ -120,16 +141,16 @@ while not atDest():
         angle_turned = -90
     else:
         angle_turned = 90
-    raw_input("Press any key to continue...")
+
+    #raw_input("Press any key to continue...")
     turn(angle_turned)
 
-    raw_input("Press any key to continue...")
-
+    #raw_input("Press any key to continue...")
     move(ir_rng)
 
     # while its route back to the path is obstructed
     while obstructed(-angle_turned):
-        raw_input("Press any key to continue...")
+        #raw_input("Press any key to continue...")
         if obstructed(0):
             turn(angle_turned)
         else:
@@ -141,7 +162,7 @@ while not atDest():
 
     # while its route back to the path is obstructed
     while obstructed(-angle_turned):
-        raw_input("Press any key to continue...")
+        #raw_input("Press any key to continue...")
         if obstructed(0):
             turn(angle_turned)
         else:
@@ -149,4 +170,4 @@ while not atDest():
     
     move(ir_rng) # move once more for safety
 
-    raw_input("Press any key to continue...")
+    #raw_input("Press any key to continue...")

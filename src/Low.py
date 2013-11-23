@@ -1,6 +1,8 @@
 from Myro import *  # Import the myro module
-init("simulator")   # Use the robot simulator
+init("COM7")   # Use the robot simulator
 import time
+
+setS2Volume(100)
 
 bass=392
 A  = 440.0
