@@ -56,7 +56,7 @@ def obstructed(n): # faces angle n, checks whether obstructed, turns back
 	if n != 0:
 		turn(n)
 
-	num_readings = 1
+	num_readings = 8
 	s = []
 	for i in range(num_readings):
 		s.append(getObstacle(1))
