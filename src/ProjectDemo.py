@@ -2,7 +2,7 @@
 # TODO: use camera in decision making
 # to do: check if it's continually getting further from the destination
 
-from myro import *
+from Myro import *
 import math
 
 init("COM7")
@@ -34,7 +34,8 @@ def getDeltaTheta(): # returns the angle between where it's facing and where it 
 			d_theta = 270
 	else:
 		d_theta = math.degrees(math.atan(d_y/d_x))
-	print "Delta theta calculated to be:%d" % (d_theta - theta)
+
+	print ("Delta theta calculated to be:", (d_theta - theta))
         if(d_x >= 0):
             return (d_theta - theta)
         else:
@@ -42,7 +43,7 @@ def getDeltaTheta(): # returns the angle between where it's facing and where it 
 
 def turn(n): # rotates n degrees, updates theta
 	global w, theta
-	print "Turning %d degrees (%d seconds)..." % (n, abs(n/w))
+	print ("Turning {} degrees ({} seconds)...".format(n, abs(n/w)))
 	if n >= 0:
 		turnLeft(1, n/w)
 	else:
@@ -55,34 +56,34 @@ def obstructed(n): # faces angle n, checks whether obstructed, turns back
 	if n != 0:
 		turn(n)
 
-	num_readings = 8
+	num_readings = 1
 	s = []
 	for i in range(num_readings):
 		s.append(getObstacle(1))
 	s.sort()
-	reading = s[num_readings/2 - 1]
+	reading = s[int(num_readings/2 - 1)]
 
-	print "Reading:%s, threshold:%d" %(reading, threshold)
+	print ("Reading:%s, threshold:%d" %(reading, threshold))
 	if reading >= threshold:
 		obstructed = True
 	if obstructed:
-		print "Obstructed!"
+		print ("Obstructed!")
 	if n != 0:
 		turn(-n)
 	return obstructed
 
 def move(d): # moves d centimeters, updates position
 	global x, y, theta, v
-	print "Moving %d cm (%f seconds)..."%(d, abs(d/v))
+	print ("Moving %d cm (%f seconds)..."%(d, abs(d/v)))
 	if d >= 0:
 		forward(1, d/v)
 	else:
 		backward(1, -d/v)
 
-	print "Initial position: x:%d y:%d theta:%d" % (x, y, theta)
+	print ("Initial position: x:%d y:%d theta:%d" % (x, y, theta))
 	x += d*math.cos(math.radians(theta)) # update x
 	y += d*math.sin(math.radians(theta)) # update y
-	print "Final position: x:%d y:%d theta:%d" % (x, y, theta)
+	print ("Final position: x:%d y:%d theta:%d" % (x, y, theta))
 
 def atDest():
 	return abs(x_f - x) < r_f and abs(y_f - y) < r_f
