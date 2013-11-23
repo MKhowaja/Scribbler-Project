@@ -5,7 +5,7 @@
 from myro import *
 import math
 
-init("COM5")
+init("COM7")
 
 # position
 x = 0
@@ -19,7 +19,7 @@ r_f = 10 # radius of endzone
 
 ### CONSTANTS ###
 ir_rng = 13 # range of the IR sensor (cm)
-threshold = 1050 # threshold for IR obstacle
+threshold = 1000 # threshold for IR obstacle
 v = 12.5 # velocity (cm/s)
 w = 115.38 # omega (degrees/s)
 
@@ -30,8 +30,8 @@ def getDeltaTheta(): # returns the angle between where it's facing and where it 
 	if d_x == 0:
 		if(d_y > 0):
 			d_theta = 90
-	    else:
-                d_theta = 270
+		else:
+			d_theta = 270
 	else:
 		d_theta = math.degrees(math.atan(d_y/d_x))
 	print "Delta theta calculated to be:%d" % (d_theta - theta)
@@ -54,19 +54,16 @@ def obstructed(n): # faces angle n, checks whether obstructed, turns back
 	obstructed = False
 	if n != 0:
 		turn(n)
-	s = getObstacle()
-	num_readings = 3
 
-	for i in range(len(s)):
-		s[i] /= num_readings
+	num_readings = 8
+	s = []
+	for i in range(num_readings):
+		s.append(getObstacle(1))
+	s.sort()
+	reading = s[num_readings/2 - 1]
 
-	for i in range(1,num_readings):
-		a = getObstacle()
-		for x in range(len(s)):
-			s[x] += a[x]/num_readings
-
-	print "Obstacles:%s, threshold:%d" %(str(s), threshold)
-	if s[0] > threshold or s[1] > threshold or s[2] > threshold:
+	print "Reading:%s, threshold:%d" %(reading, threshold)
+	if reading >= threshold:
 		obstructed = True
 	if obstructed:
 		print "Obstructed!"
@@ -92,9 +89,6 @@ def atDest():
 
 # until it reaches destination
 while not atDest():
-	x_f = int(raw_input("X_Final:"));
-	y_f = int(raw_input("Y_Final:"));
-
 	# rotate to face destination
 	angle = getDeltaTheta()
 	turn(angle)
