@@ -8,7 +8,7 @@ def IsCustomer():
         for j in range(getHeight(picture)):
             pixel = getPixel(picture, i, j)
             #if pixel's colour is in range of colour (pink/red in this case)
-            if getRed(pixel)==255:
+            if getRed(pixel)>200:
                 counter++
     if counter >= (getWidth(picture)*getHeight(picture)/4)
         return True
