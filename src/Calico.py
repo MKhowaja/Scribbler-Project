@@ -34,7 +34,7 @@ v = 12.5 # velocity (cm/s)
 #w = 115.38 # angular speed (omega) (degrees/s)
 
 # setup
-setIRPower(132)
+setIRPower(134)
 setS2Volume(100)
 
 # Returns how much you need to turn by to face the final destination from the given angle
@@ -56,10 +56,7 @@ def getDeltaTheta(theta):
         else:
             d_theta += 180
 
-    if(d_x >= 0):
-        d_theta = d_theta - theta
-    else:
-        d_theta = d_theta + theta
+    d_theta = d_theta - theta
 
     print ("Delta theta calculated to be:", d_theta)
 
@@ -90,7 +87,7 @@ def obstructed(n):
     if reading >= threshold:
         obstructed = True
 
-    print ("Reading:%s, threshold:%d, obstructed?:%b" %(reading, threshold, obstrcuted))
+    print ("Reading:%s, threshold:%d, obstructed?:%r" %(reading, threshold, obstructed))
 
     if n != 0:
         turn(-n)
@@ -127,8 +124,8 @@ def atDest():
     return abs(x_f - x) < r_f and abs(y_f - y) < r_f
 
 #### MAIN LOOP ####
-x_f = int(raw_input("Enter final x:"))
-y_f = int(raw_input("Enter final y:"))
+x_f = int(raw_input("Enter final x"))
+y_f = int(raw_input("Enter final y"))
 
 # until it reaches destination
 while not atDest():
