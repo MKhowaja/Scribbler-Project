@@ -2,8 +2,9 @@ from Myro import *  # Import the myro module
 init("COM7")   # Use the robot simulator
 import time
 
-setS2Volume(100)
+setS2Volume(100) #set volume for robot
 
+#frequency values for notes
 bass=392
 A  = 440.0
 As = 466.164
@@ -23,6 +24,7 @@ As2 = 932.33
 B2  = 987.77
 C2 = 1046.50
 
+#loop music
 for i in range(2):
     beep(0.15, Ds)
     time.sleep(0.05)
