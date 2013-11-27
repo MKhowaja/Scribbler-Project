@@ -2,6 +2,7 @@
 #returns True if the obstacle if a customer; returns False otherwise
 #customer is an obstacle if more than a quarter of the picture is red/pink
 def IsCustomer():
+    beep(1,880) #beep at beginning
     picture = takePicture("color")  #takes picture of obstacle
     counter = 0 #variable for number of red 
     #loop for every pixel in photo
@@ -13,6 +14,8 @@ def IsCustomer():
                 counter++ #add one to count
     #if more than 2/3 of photo matches colour
     if counter >= (2*getWidth(picture)*getHeight(picture)/3)
+        beep(1,880) #beep at end
         return True
     else
+        beep(1,880) #beep at end
         return False
