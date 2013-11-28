@@ -33,9 +33,86 @@ threshold = 1000 # threshold for IR obstacle (anything greater is considered blo
 v = 12.5 # velocity (cm/s)
 #w = 115.38 # angular speed (omega) (degrees/s)
 
+# Musical notes in the scale, as they correspond to beep frequency
+# Notes are 4th and 5th octaves
+#4th octave
+A  = 440.0    #A
+As = 466.164  # Asharp or Bflat
+B  = 493.88   #B
+#5th octave
+C  = 523.25   #C 
+Cs = 554.37   #Csharp or Dflat
+D  = 587.33   #D
+Ds = 622.25   #Dsharp or Eflat
+E  = 659.26   #E
+F  = 698.46   #F
+Fs = 739.99   #Fsharp or Gflat
+G  = 783.99   #G
+Gs = 830.61   #G sharp or A flat
+A2  = 880     #A octave higher
+As2 = 932.33  #Asharp or Bflat octave higher
+B2  = 987.77  #B octave higher
+
 # setup
 setIRPower(134)
 setS2Volume(100)
+
+# Play the song
+def playSong():
+    beep(0.25, B2)
+    beep(0.25, A2)
+    beep(0.5, G)
+    beep(0.5, G)
+    beep(0.5, G)
+
+    beep(0.25, B)
+    beep(0.25, C)
+    beep(0.20, D)
+    beep(0.20, E)
+    beep(0.20, D)
+    beep(0.20, B)
+    beep(0.40, D)
+
+    beep(0.25, G)
+    beep(0.25, A2)
+    beep(0.20, B2)
+    beep(0.20, B2)
+    beep(0.20, B2)
+    beep(0.20, B2)
+    beep(0.50, B2)
+
+    beep(0.25, G)
+    beep(0.25, A2)
+    beep(0.20, B2)
+    beep(0.20, A2)
+    beep(0.20, A2)
+    beep(0.20, Gs)
+    beep(0.50, A2)
+
+ 
+    beep(0.25, B2)
+    beep(0.25, A2)
+    beep(0.20, G)
+    beep(0.20, A2)
+    beep(0.20, G)
+    beep(0.20, A2)
+    beep(0.20, G)
+    beep(0.20, D)
+
+    beep(0.20, B)
+    beep(0.20, C)
+    beep(0.20, D)
+    beep(0.20, E)
+    beep(0.20, D)
+    beep(0.20, B)
+    beep(0.20, D)
+    beep(0.20, D)
+
+    beep(0.20, G)
+    beep(0.20, A2)
+    beep(0.7, B2)
+    beep(0.8, A2)
+    beep(1.1, G)
 
 # Returns how much you need to turn by to face the final destination from the given angle
 def getDeltaTheta(theta):
@@ -69,13 +146,32 @@ def turn(n):
     turnBy(n)
     theta += n
 
+#Returns whether obstacle is red or not
+def ColourDetect():
+    picture = takePicture("color")  #takes picture of obstacle
+    show(picture)
+    counterr = 0 #variable for number of red
+    #loop for every 100 pixels in photo
+    for i in range((int)(getWidth(picture)/20)):
+        for j in range((int)(getHeight(picture)/20)):
+            pixel = getPixel(picture, 20*i, 20*j) #read pixel
+            #if pixel colour is red
+            if getBlue(pixel)<3*getRed(pixel)/5 and getGreen(pixel)<3*getRed(pixel)/5:
+                counterr+=1 #add one to count
+    #if more than 1/5 of photo matches colour
+    if counterr > (getWidth(picture)*getHeight(picture)/2000):
+        return True
+    else:
+        return False
+
 # Faces angle n, checks whether obstructed, turns back
 def obstructed(n):
     global threshold
+
     if n != 0:
         turn(n)
 
-    obstructed = False
+    obstruct = False
 
     num_readings = 8
     s = []
@@ -85,14 +181,14 @@ def obstructed(n):
     reading = s[int(num_readings/2 - 1)]
 
     if reading >= threshold:
-        obstructed = True
+        obstruct = True
 
-    print ("Reading:%s, threshold:%d, obstructed?:%r" %(reading, threshold, obstructed))
+    print ("Reading:%s, threshold:%d, obstruct?:%r" %(reading, threshold, obstruct))
 
     if n != 0:
         turn(-n)
 
-    return obstructed
+    return obstruct
 
 # Moves d centimeters, updates position
 def move(d):
@@ -115,6 +211,9 @@ def move(d):
 
     motors(0,0)
 
+    if obstructed(0) and ColourDetect():
+        playSong()
+
     x += travelled*math.cos(math.radians(theta)) # update x
     y += travelled*math.sin(math.radians(theta)) # update y
     print ("Position after moving: x:%d y:%d theta:%d" % (x, y, theta))
@@ -129,12 +228,14 @@ y_f = int(raw_input("Enter final y"))
 
 # until it reaches destination
 while not atDest():
+
     # rotate to face destination
     angle = getDeltaTheta(theta)
     turn(angle)
 
     # move forward until detects obstacle
     move(math.sqrt((x_f-x)**2+(y_f-y)**2))
+
 
     if atDest():
         print("Arrived at destination")
@@ -176,3 +277,4 @@ while not atDest():
     
     move(ir_rng) # move once more for safety
     #raw_input("Press any key to continue...")
+
