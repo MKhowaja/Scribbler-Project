@@ -9,7 +9,7 @@ Forward(time)
 turnRight(time)
 turnLeft(time)
 
-Ccoordinate system is in cm
+Coordinate system is in cm
 
 List of Remaining Milestones
 -Multiple object navigation
