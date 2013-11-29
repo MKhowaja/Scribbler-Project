@@ -1,15 +1,7 @@
-# TODO: use camera in decision making
-# to do: check if it's continually getting further from the destination
-
-#potential to dos:
-    #smarter deciding turn left or right
-    #assuming rectangular objects
-    #instead of turning 90, turn to face destination
-    #get velocity by doing move-by
-
-# to do:
-    # color recognition
-    # music
+# Potential improvements:
+    # use camera in decision making
+    # check if it's continually getting further from the destination
+    # determine velocity by doing move-by
 
 from Myro import *
 import math
@@ -28,18 +20,17 @@ theta_f = 90
 r_f = 10 # radius of endzone
 
 ### CONSTANTS ###
-ir_rng = 18 # range of the IR sensor (cm) (how far away it will notice an object)
+ir_rng = 18 # length of the robot, to ensure that all of it clears the obstacle
 threshold = 1000 # threshold for IR obstacle (anything greater is considered blocked)
 v = 12.5 # velocity (cm/s)
-#w = 115.38 # angular speed (omega) (degrees/s)
 
 # Musical notes in the scale, as they correspond to beep frequency
 # Notes are 4th and 5th octaves
-#4th octave
+# 4th octave
 A  = 440.0    #A
-As = 466.164  # Asharp or Bflat
+As = 466.164  #Asharp or Bflat
 B  = 493.88   #B
-#5th octave
+# 5th octave
 C  = 523.25   #C 
 Cs = 554.37   #Csharp or Dflat
 D  = 587.33   #D
@@ -57,7 +48,7 @@ B2  = 987.77  #B octave higher
 setIRPower(134)
 setS2Volume(100)
 
-# Play the song
+# Plays the ice-cream truck song
 def playSong():
     beep(0.25, B2)
     beep(0.25, A2)
@@ -88,7 +79,6 @@ def playSong():
     beep(0.20, A2)
     beep(0.20, Gs)
     beep(0.50, A2)
-
  
     beep(0.25, B2)
     beep(0.25, A2)
@@ -119,6 +109,7 @@ def getDeltaTheta(theta):
     global x, y
     d_x = x_f - x
     d_y = y_f - y
+
     if d_x == 0:
         if(d_y > 0):
             d_theta = 90
@@ -128,15 +119,14 @@ def getDeltaTheta(theta):
         d_theta = math.degrees(math.atan(d_y/d_x))
 
     if(d_x < 0): # quandrant adjustment
-        if(d_y < 0):
-            d_theta -= 180
-        else:
+        if(d_y > 0): # 2rd quadrant
             d_theta += 180
+        else: # 3rd quadrant
+            d_theta -= 180
 
     d_theta = d_theta - theta
 
     print ("Delta theta calculated to be:", d_theta)
-
     return d_theta
 
 # Rotates n degrees, updates theta
@@ -146,8 +136,8 @@ def turn(n):
     turnBy(n)
     theta += n
 
-#Returns whether obstacle is red or not
-def ColourDetect():
+# Returns whether obstacle is red or not
+def isRed():
     picture = takePicture("color")  #takes picture of obstacle
     show(picture)
     counterr = 0 #variable for number of red
@@ -173,7 +163,7 @@ def obstructed(n):
 
     obstruct = False
 
-    num_readings = 8
+    num_readings = 8 #takes median of 8 readings
     s = []
     for i in range(num_readings):
         s.append(getObstacle(1))
@@ -200,18 +190,19 @@ def move(d):
     else:
         direction = -1
 
-    motors(direction,direction)
-    t0 = currentTime()
+    motors(direction,direction) # start motors
 
+    t0 = currentTime()
     travelled = 0
+    #until it reaches destination
     while not obstructed(0) and abs(travelled - d) > 5 and not atDest():
         t1 = currentTime()
-        travelled += v*(t1-t0)*direction
+        travelled += v*(t1-t0)*direction # update distanced travelled
         t0 = t1
 
-    motors(0,0)
+    motors(0,0) # stop motors
 
-    if obstructed(0) and ColourDetect():
+    if obstructed(0) and isRed():
         playSong()
 
     x += travelled*math.cos(math.radians(theta)) # update x
@@ -223,12 +214,11 @@ def atDest():
     return abs(x_f - x) < r_f and abs(y_f - y) < r_f
 
 #### MAIN LOOP ####
-x_f = int(raw_input("Enter final x"))
-y_f = int(raw_input("Enter final y"))
+x_f = int(raw_input("Enter destination x"))
+y_f = int(raw_input("Enter destination y"))
 
 # until it reaches destination
 while not atDest():
-
     # rotate to face destination
     angle = getDeltaTheta(theta)
     turn(angle)
@@ -236,32 +226,28 @@ while not atDest():
     # move forward until detects obstacle
     move(math.sqrt((x_f-x)**2+(y_f-y)**2))
 
-
-    if atDest():
+    if atDest(): # if arrived at destinatino
         print("Arrived at destination")
-        turn(theta_f - theta)
+        turn(theta_f - theta) # rotate to face theta_f
         beep(1,880)
-        break
+        break # exit loop
 
     # turn based on which sensor detects the obstacle
     if getObstacle(0) < getObstacle(2):
         angle_turned = 90
     else:
         angle_turned = -90
-
-    #raw_input("Press any key to continue...")
     turn(angle_turned)
 
-    #raw_input("Press any key to continue...")
     move(ir_rng)
 
     # while its route back to the path is obstructed
     while obstructed(-angle_turned):
-        #raw_input("Press any key to continue...")
         if obstructed(0):
             turn(angle_turned)
         else:
             move(ir_rng)
+    # past obstacle
 
     move(ir_rng) # move once more for safety
     turn(-angle_turned) # turn back on path
@@ -269,12 +255,10 @@ while not atDest():
 
     # while its route back to the path is obstructed
     while obstructed(-angle_turned):
-        #raw_input("Press any key to continue...")
         if obstructed(0):
             turn(angle_turned)
         else:
             move(ir_rng)
     
     move(ir_rng) # move once more for safety
-    #raw_input("Press any key to continue...")
 
